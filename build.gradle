@@ -40,11 +40,13 @@ remotes {
 
 //TODO actually deploy app
 task deploy {
-    println ssh.version
-    ssh.run {
-        session(remotes.pi) {
-            put from: 'blah.jar', into '/somewhere'
-            execute 'sudo service soemRandomDaemon restart'
+    doLast{
+        println ssh.version
+        ssh.run {
+            session(remotes.pi) {
+                put from: 'blah.jar', into '/somewhere'
+                execute 'sudo service soemRandomDaemon restart'
+            }
         }
     }
 }
