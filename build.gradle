@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'org.hidetake.ssh' version '2.10.1'
 }
 
 group 'DomFaryna'
@@ -27,4 +28,23 @@ dependencies {
 test {
     dependsOn cleanTest
     testLogging.showStandardStreams = true
+}
+
+//TODO get proper information
+remotes {
+    pi {
+        host = "10.0.0.0"
+        user = 'raspberry?'
+    }
+}
+
+//TODO actually deploy app
+task deploy {
+    println ssh.version
+    ssh.run {
+        session(remotes.pi) {
+            put from: 'blah.jar', into '/somewhere'
+            execute 'sudo service soemRandomDaemon restart'
+        }
+    }
 }
