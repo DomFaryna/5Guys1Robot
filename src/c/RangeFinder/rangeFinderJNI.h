@@ -9,10 +9,18 @@ extern "C" {
 #endif
 /*
  * Class:     DomFaryna_FiveGuysOneRobot_Sensors_RangeFinderJNI
- * Method:    print
+ * Method:    init
  * Signature: ()V
  */
-JNIEXPORT void JNICALL Java_DomFaryna_FiveGuysOneRobot_Sensors_RangeFinderJNI_print
+JNIEXPORT void JNICALL Java_DomFaryna_FiveGuysOneRobot_Sensors_RangeFinderJNI_init
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     DomFaryna_FiveGuysOneRobot_Sensors_RangeFinderJNI
+ * Method:    getDistance
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_DomFaryna_FiveGuysOneRobot_Sensors_RangeFinderJNI_getDistance
   (JNIEnv *, jobject);
 
 #ifdef __cplusplus
