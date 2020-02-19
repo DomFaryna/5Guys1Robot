@@ -1,4 +1,4 @@
-How to connect to Pi
+# How to connect to Pi
 
 1. Make sure PI and Computer Ethernet cables are unpluged
 2. Go to control panel -> Network and Internet -> Network connections

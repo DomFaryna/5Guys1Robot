@@ -30,7 +30,7 @@ test {
     testLogging.showStandardStreams = true
 }
 
-//TODO get proper information
+//TODO get proper informationt
 remotes {
     pi {
         host = "10.0.0.0"
