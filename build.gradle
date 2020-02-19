@@ -14,6 +14,9 @@ repositories {
     maven {
         url 'https://github.com/rosjava/rosjava_mvn_repo/raw/master'
     }
+    maven {
+        url 'https://github.com/vorburger/dual-mc33926-motor-driver-pi4j.git'
+    }
 }
 
 dependencies {
@@ -23,6 +26,9 @@ dependencies {
     // lombok to make our lives easier
     compileOnly 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+    // motors libary
+    compile group: 'ch.vorburger.raspberry', name: 'mc33926', version: '1.0.0-SNAPSHOT'
 
     // https://github.com/rosjava/rosjava_mvn_repo
     compile group: 'org.ros.rosjava_core', name: 'rosjava', version: '0.3.6'
