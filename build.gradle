@@ -14,9 +14,6 @@ repositories {
     maven {
         url 'https://github.com/rosjava/rosjava_mvn_repo/raw/master'
     }
-    maven {
-        url 'https://github.com/vorburger/dual-mc33926-motor-driver-pi4j.git'
-    }
 }
 
 dependencies {
@@ -26,9 +23,6 @@ dependencies {
     // lombok to make our lives easier
     compileOnly 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
-
-    // motors libary
-    compile group: 'ch.vorburger.raspberry', name: 'mc33926', version: '1.0.0-SNAPSHOT'
 
     // https://github.com/rosjava/rosjava_mvn_repo
     compile group: 'org.ros.rosjava_core', name: 'rosjava', version: '0.3.6'
@@ -55,15 +49,17 @@ remotes {
     pi {
         host = "pi"
         user = 'pi'
+        // I know this is unsafe, but I am lazy
+        password = 'domdabomb'
     }
 }
 
-task deploy {
+task deploy(dependsOn: fatJar) {
     doLast{
-        println ssh.version
+        //println ssh.version
         ssh.run {
             session(remotes.pi) {
-                put from: 'build/libs/FiveGuysOneRobot-all-1.0.jar', into '~'
+                put from: 'build/libs/FiveGuysOneRobot-all-1.0.jar', into: 'FiveGuysOneRobot-all-1.0.jar'
             }
         }
     }

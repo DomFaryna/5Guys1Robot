@@ -56,7 +56,7 @@ public class PID {
         total_e += e * dt;
 
         //the PID formula is output = weighted proportional error + weighted integrated error + weighted differentiated error
-        output = p * e + i * total_e + d * de / dt;
+        output = p * e + i * total_e + d * (de / dt);
 
 
         // clamp

@@ -24,19 +24,6 @@
 #include "jni.h"
 #include "rangeFinderJNI.h"
 
-
-// Put all JNI functions at the top. Everything else is very magically
-//
-//
-JNIEXPORT void JNICALL Java_DomFaryna_FiveGuysOneRobot_Sensors_RangeFinderJNI_init (JNIEnv *enc, jobject job){
-    tofInit(0, 0x29, 1);
-}
-
-JNIEXPORT jint JNICALL Java_DomFaryna_FiveGuysOneRobot_Sensors_RangeFinderJNI_init (JNIEnv *enc, jobject job){
-    return tofReadDistance();
-}
-
-
 static int file_i2c = 0;
 static unsigned char stop_variable;
 static uint32_t measurement_timing_budget_us;
@@ -116,6 +103,7 @@ char filename[32];
 	sprintf(filename,"/dev/i2c-%d", iChan);
 	if ((file_i2c = open(filename, O_RDWR)) < 0)
 	{
+
 		fprintf(stderr, "Failed to open the i2c bus; need to run as sudo?\n");
 		return 0;
 	}
@@ -873,4 +861,16 @@ int i;
 	return 1;
 
 } /* tofGetModel() */
+
+
+// Put all JNI functions at the bottom, cause c. Everything else is very magically
+//
+//
+JNIEXPORT void JNICALL Java_DomFaryna_FiveGuysOneRobot_Sensors_RangeFinderJNI_init (JNIEnv *enc, jobject job){
+    tofInit(1, 0x29, 1);
+}
+
+JNIEXPORT jint JNICALL Java_DomFaryna_FiveGuysOneRobot_Sensors_RangeFinderJNI_getDistance (JNIEnv *enc, jobject job){
+    return tofReadDistance();
+}
 
