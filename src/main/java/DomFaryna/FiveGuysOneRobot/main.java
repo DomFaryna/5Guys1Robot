@@ -14,8 +14,12 @@ public class main {
         RangeFinderJNI he = new RangeFinderJNI();
         ImuJNI ha = new ImuJNI();
         while (true) {
-            XYZ<Double> location = ha.getGyro();
-            System.out.println(String.format("gyrostuff X: %f, Y: %f, Z: %f", location.x, location.y, location.z));
+            XYZ location = ha.getGyro();
+            XYZ acc = ha.getAcc();
+            XYZ mag = ha.getMag();
+            //System.out.println(String.format("gyroStuff X: %f, Y: %f, Z: %f", location.x, location.y, location.z));
+            System.out.println(String.format("magStuff X: %f, Y: %f, Z: %f", mag.x, mag.y, mag.z));
+            //System.out.println(String.format("accStuff X: %f, Y: %f, Z: %f", acc.x, acc.y, acc.z));
             Thread.sleep(1000);
         }
         //while (true) {
