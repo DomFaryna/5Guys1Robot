@@ -10,10 +10,10 @@ extern "C" {
 /*
  * Class:     DomFaryna_FiveGuysOneRobot_Sensors_RangeFinderJNI
  * Method:    init
- * Signature: ()V
+ * Signature: (I)V
  */
 JNIEXPORT void JNICALL Java_DomFaryna_FiveGuysOneRobot_Sensors_RangeFinderJNI_init
-  (JNIEnv *, jobject);
+  (JNIEnv *, jobject, jint);
 
 /*
  * Class:     DomFaryna_FiveGuysOneRobot_Sensors_RangeFinderJNI

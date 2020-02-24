@@ -866,8 +866,8 @@ int i;
 // Put all JNI functions at the bottom, cause c. Everything else is very magically
 //
 //
-JNIEXPORT void JNICALL Java_DomFaryna_FiveGuysOneRobot_Sensors_RangeFinderJNI_init (JNIEnv *enc, jobject job){
-    tofInit(1, 0x29, 1);
+JNIEXPORT void JNICALL Java_DomFaryna_FiveGuysOneRobot_Sensors_RangeFinderJNI_init (JNIEnv *enc, jobject job, jint i2cBus){
+    tofInit(i2cBus, 0x29, 1);
 }
 
 JNIEXPORT jint JNICALL Java_DomFaryna_FiveGuysOneRobot_Sensors_RangeFinderJNI_getDistance (JNIEnv *enc, jobject job){

@@ -29,8 +29,11 @@ public class Motors {
             this.PWMB = PWMB2;
             this.D = D2;
         }
+        Gpio.pinMode(PWMA, Gpio.OUTPUT);
+        Gpio.pinMode(PWMB, Gpio.OUTPUT);
         Gpio.digitalWrite(PWMA, 1);
         Gpio.digitalWrite(PWMB, 0);
+        Gpio.pinMode(D, Gpio.PWM_OUTPUT);
     }
 
     public void setSpeed(double speed){
