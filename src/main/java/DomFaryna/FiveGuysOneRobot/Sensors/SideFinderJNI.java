@@ -1,12 +1,12 @@
 package DomFaryna.FiveGuysOneRobot.Sensors;
 
-public class RangeFinderJNI {
+// SideFinder is the side range finder. Another i2c call using a native input.
+public class SideFinderJNI {
     static {
-        System.loadLibrary("rangeFinder");
-        System.out.println("Successfully loaded rangeFinder library");
+        System.loadLibrary("sideFinder");
+        System.out.println("Successfully loaded sideFinder library");
     }
-
-    public RangeFinderJNI() {
+    public SideFinderJNI(){
         init();
     }
 

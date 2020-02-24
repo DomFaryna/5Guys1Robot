@@ -1,12 +1,8 @@
 package DomFaryna.FiveGuysOneRobot;
 
-import DomFaryna.FiveGuysOneRobot.Controls.Motors;
-import DomFaryna.FiveGuysOneRobot.Sensors.ImuJNI;
 import DomFaryna.FiveGuysOneRobot.Sensors.RangeFinderJNI;
-import DomFaryna.FiveGuysOneRobot.Sensors.SideFinder;
-import DomFaryna.FiveGuysOneRobot.Sensors.XYZ;
+import DomFaryna.FiveGuysOneRobot.Sensors.SideFinderJNI;
 import com.pi4j.io.i2c.I2CFactory;
-import com.pi4j.wiringpi.Gpio;
 
 import java.io.IOException;
 
@@ -18,7 +14,8 @@ public class main {
         //if(err != 0){
         //    System.out.println("Fuck");
         //}
-        RangeFinderJNI he = new RangeFinderJNI();
+        //RangeFinderJNI he = new RangeFinderJNI();
+        SideFinderJNI side = new SideFinderJNI();
         //ImuJNI ha = new ImuJNI();
         //Motors left = new Motors(false);
         //Motors right = new Motors(true);
@@ -28,7 +25,8 @@ public class main {
             //right.setSpeed(0.5);
             //left.setSpeed(0.5);
 
-            System.out.println(String.format("distance %dmm", he.getDistance()));
+            System.out.println(String.format("Distance from side %dmm", side.getDistance()));
+            //System.out.println(String.format("distance %dmm", he.getDistance()));
             //XYZ location = ha.getGyro();
             //XYZ acc = ha.getAcc();
             //XYZ mag = ha.getMag();
