@@ -31,26 +31,37 @@
 #include "VL53L1X_calibration.h"
 #include "vl53l1_platform.h"
 
-int bus = 1;
 int address = 0x29;
 // Have no idea what DEV is, but it is needed for initilizing, for some reason
 int Dev = 0;
 
 
-JNIEXPORT void JNICALL Java_DomFaryna_FiveGuysOneRobot_Sensors_SideFinderJNI_init(JNIEnv *env, jobject obj){
+JNIEXPORT void JNICALL Java_DomFaryna_FiveGuysOneRobot_Sensors_SideFinderJNI_init(JNIEnv* env, jobject obj, jint i2cBus){
     uint8_t byteData, sensorState = 0;
     uint16_t wordData;
+    printf("bus %d \n", i2cBus);
+    printf("before init\n");
+    int file = VL53L1X_UltraLite_Linux_I2C_Init(Dev, i2cBus, address);
+    printf("After init\n");
 
-    int file = VL53L1X_UltraLite_Linux_I2C_Init(Dev, bus, address);
     if (file == -1){
         printf("Something has gone terrible wrong trying to initilized the sideFinder");
+        jclass Exception = (*env)->FindClass(env, "java/lang/Exception");
+        (*env)->ThrowNew(env, Exception,"Could not init sideFinder");
         return;
     }
-    VL53L1X_SensorInit(Dev);
-    VL53L1X_SetDistanceMode(Dev, 2); /* 1=short, 2=long */
-    VL53L1X_SetTimingBudgetInMs(Dev, 100);
-    VL53L1X_SetInterMeasurementInMs(Dev, 100);
-    VL53L1X_StartRanging(Dev);
+    int status = 0;
+    status += VL53L1X_SensorInit(Dev);
+    status += VL53L1X_SetDistanceMode(Dev, 2); /* 1=short, 2=long */
+    status += VL53L1X_SetTimingBudgetInMs(Dev, 100);
+    status += VL53L1X_SetInterMeasurementInMs(Dev, 100);
+    status += VL53L1X_StartRanging(Dev);
+    if(status != 0){
+        printf("Something has gone terrible wrong trying to initilized the sideFinder");
+        jclass Exception = (*env)->FindClass(env, "java/lang/Exception");
+        (*env)->ThrowNew(env, Exception,"Could not init sideFinder");
+        return;
+    }
 
 }
 

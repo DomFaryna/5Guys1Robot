@@ -13,7 +13,7 @@ extern "C" {
  * Signature: ()V
  */
 JNIEXPORT void JNICALL Java_DomFaryna_FiveGuysOneRobot_Sensors_SideFinderJNI_init
-  (JNIEnv *, jobject);
+  (JNIEnv *, jobject, jint);
 
 /*
  * Class:     DomFaryna_FiveGuysOneRobot_Sensors_SideFinderJNI
