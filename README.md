@@ -1,7 +1,7 @@
 # How to connect to Pi
 
 1. Make sure PI and Computer Ethernet cables are unpluged
-2. Go to control panel -> Network and Internet -> Network connections
+2. Search in Windows bar "network connections"
 3. Right click on Wifi -> Properties
 4. Go to Sharing Tab
 5. Enable both checkboxes. Make sure home connection network is Ethernet. Click OK.
