@@ -14,7 +14,7 @@ public class ImuJNI {
     // Used to keep track of the gyro and integrate it
     private ScheduledExecutorService exec = Executors.newScheduledThreadPool(1);
     static {
-        System.loadLibrary("imu");
+        System.loadLibrary("bno");
         System.out.println("Successfully loaded the imu library");
     }
 
