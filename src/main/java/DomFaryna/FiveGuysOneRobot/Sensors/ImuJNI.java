@@ -15,33 +15,33 @@ public class ImuJNI {
     private ScheduledExecutorService exec = Executors.newScheduledThreadPool(1);
     static {
         System.loadLibrary("bno");
-        System.out.println("Successfully loaded the imu library");
+        System.out.println("Successfully loaded the bno library");
     }
 
     public ImuJNI(){
         calibrate();
-        XYZ calibration = new XYZ();
-        System.out.println("Calibrating IMU");
-        for (int i = 0; i < 2000; i++) {
-            XYZ val = getGyro();
-            val.round();
-            calibration.x += val.x;
-            calibration.y += val.y;
-            calibration.z += val.z;
-            try {
-                Thread.sleep(3);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+        //XYZ calibration = new XYZ();
+        //System.out.println("Calibrating IMU");
+        //for (int i = 0; i < 2000; i++) {
+        //    XYZ val = getGyro();
+        //    val.round();
+        //    calibration.x += val.x;
+        //    calibration.y += val.y;
+        //    calibration.z += val.z;
+        //    try {
+        //        Thread.sleep(3);
+        //    } catch (InterruptedException e) {
+        //        e.printStackTrace();
+        //    }
+        //}
 
-        System.out.println("IMU calibration finished");
-        calibration.x /= 2000;
-        calibration.y /= 2000;
-        calibration.z /= 2000;
-        offset = calibration;
-        final Runnable update = () -> updateGyro();
-        exec.scheduleAtFixedRate(update, 10, 10, TimeUnit.MILLISECONDS);
+        //System.out.println("IMU calibration finished");
+        //calibration.x /= 2000;
+        //calibration.y /= 2000;
+        //calibration.z /= 2000;
+        //offset = calibration;
+        //final Runnable update = () -> updateGyro();
+        //exec.scheduleAtFixedRate(update, 10, 10, TimeUnit.MILLISECONDS);
     }
 
     public native void calibrate();
@@ -66,9 +66,13 @@ public class ImuJNI {
     }
 
     public XYZ getGyro() {
-        synchronized (current){
-            return new XYZ(current.x, current.y, current.z);
-        }
+        double[] raw = getRawGyro();
+        XYZ sol = new XYZ(raw[0], raw[1], raw[2]);
+        sol.round();
+        return sol;
+        //synchronized (current){
+        //    return new XYZ(current.x, current.y, current.z);
+        //}
     }
 
     public XYZ getAcc() {
