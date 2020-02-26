@@ -36,15 +36,13 @@ public class Motors {
         if(isRight){
             this.d1 = gpio.provisionDigitalOutputPin(M1);
             this.d2 = gpio.provisionDigitalOutputPin(M2);
-            //gpio.provisionDigitalOutputPin(PWMA);
             this.pwm = gpio.provisionSoftPwmOutputPin(PWMA);
             multiplyFactor = 100;
         } else {
-            this.d1 = gpio.provisionDigitalOutputPin(M3);
-            this.d2 = gpio.provisionDigitalOutputPin(M4);
+            this.d1 = gpio.provisionDigitalOutputPin(M4);
+            this.d2 = gpio.provisionDigitalOutputPin(M3);
             this.pwm = gpio.provisionPwmOutputPin(PWMB);
             multiplyFactor = 1024;
-            //gpio.provisionDigitalOutputPin(PWMB);
         }
         d1.setPullResistance(PinPullResistance.OFF);
         d2.setPullResistance(PinPullResistance.OFF);
@@ -54,7 +52,6 @@ public class Motors {
         System.out.println("Before\n");
         pwm.getProperties().forEach((x, y) -> System.out.println(String.format("Key: %s, Value: %s", x, y)));
         Gpio.pwmSetMode(Gpio.PWM_MODE_MS);
-        //Gpio.pwmSetRange(100);
         Gpio.pwmSetClock(500);
         System.out.println("After\n");
         pwm.getProperties().forEach((x, y) -> System.out.println(String.format("Key: %s, Value: %s", x, y)));

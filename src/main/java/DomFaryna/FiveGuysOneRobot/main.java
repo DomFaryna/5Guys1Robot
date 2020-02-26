@@ -23,18 +23,20 @@ public class main {
         Motors left = new Motors(false);
         //SideFinder find = new SideFinder();
         while (true) {
-            System.out.println("right go");
-            right.setSpeed(0.20);
+            //right.setSpeed(-0.25);
+            System.out.println("forward");
+            right.setSpeed(0.15);
+            left.setSpeed(0.15);
             Thread.sleep(1000);
-            System.out.println("Both stop");
+            System.out.println("stop");
             right.stop();
             left.stop();
             Thread.sleep(1000);
-            System.out.println("Left go");
-            left.setSpeed(-0.20);
-            right.stop();
+            System.out.println("reverse");
+            left.setSpeed(-0.15);
+            right.setSpeed(-0.15);
             Thread.sleep(1000);
-            System.out.println("Both stop");
+            System.out.println("stop");
             right.stop();
             left.stop();
             Thread.sleep(1000);
@@ -49,11 +51,6 @@ public class main {
             //System.out.println(String.format("accStuff X: %f, Y: %f, Z: %f", acc.x, acc.y, acc.z));
             //System.out.println(String.format("range %d", find.getDistance()));
             //System.out.println("Motorss should be go go ");
-            Thread.sleep(1000);
         }
-        //while (true) {
-        //    System.out.println(String.format("Distance %d", he.getDistance()));
-        //    Thread.sleep(1000);
-        //}
     }
 }
