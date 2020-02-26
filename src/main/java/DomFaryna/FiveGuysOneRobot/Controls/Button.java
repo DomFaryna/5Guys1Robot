@@ -20,15 +20,12 @@ public class Button {
     void waitForPress() {
         // Add a listener to start the program iff the button has ben pressed once and only once
         synchronized (button){
-            button.addListener(new GpioPinListenerDigital() {
-                @Override
-                public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
-                    if(event.getEdge() != PinEdge.RISING){
-                        return;
-                    }
-                    button.removeAllListeners();
-                    button.notify();
+            button.addListener((GpioPinListenerDigital) event -> {
+                if(event.getEdge() != PinEdge.RISING){
+                    return;
                 }
+                button.removeAllListeners();
+                button.notify();
             });
             try {
                 button.wait();
@@ -42,6 +39,6 @@ public class Button {
     void waitForPressAndPrint(){
         System.out.println("Gonna wait for a press");
         waitForPress();
-        System.out.println("Got a press");
+        System.out.println("Got a press. No longer waiting!!!");
     }
 }
