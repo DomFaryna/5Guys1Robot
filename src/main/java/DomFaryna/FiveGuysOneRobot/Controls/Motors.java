@@ -8,14 +8,6 @@ public class Motors {
     // well, the wiring is detecting by the board, not the
     // pins, so I think its fine to leave it here
 
-    //private final Pin M3 = RaspiPin.GPIO_06;
-    //private final Pin M4 = RaspiPin.GPIO_13;
-    //private final Pin PWMB = RaspiPin.GPIO_12;
-
-    //private final Pin M1 = RaspiPin.GPIO_20;
-    //private final Pin M2 = RaspiPin.GPIO_21;
-    //private final Pin PWMA = RaspiPin.GPIO_26;
-
     private final Pin M3 = RaspiBcmPin.GPIO_06;
     private final Pin M4 = RaspiBcmPin.GPIO_13;
     private final Pin PWMB = RaspiBcmPin.GPIO_12;
@@ -23,7 +15,6 @@ public class Motors {
     private final Pin M1 = RaspiBcmPin.GPIO_20;
     private final Pin M2 = RaspiBcmPin.GPIO_21;
     private final Pin PWMA = RaspiBcmPin.GPIO_26;
-    // Maybe?
 
     private GpioPinDigitalOutput d1;
     private GpioPinDigitalOutput d2;
