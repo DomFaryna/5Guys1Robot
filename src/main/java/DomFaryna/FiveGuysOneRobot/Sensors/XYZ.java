@@ -12,6 +12,7 @@ public class XYZ {
     public XYZ(){
          new XYZ(0.0, 0.0, 0.0);
     }
+
     public XYZ(double x, double y, double z){
         this.x = x;
         this.y = y;

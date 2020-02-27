@@ -21,7 +21,7 @@
 #define __ADAFRUIT_BNO055_H__
 
 #include "RPi_Sensor.h"
-#include </utility/imumaths.h>
+#include <imumaths.h>
 
 #define BNO055_ADDRESS_A (0x28)
 #define BNO055_ADDRESS_B (0x29)

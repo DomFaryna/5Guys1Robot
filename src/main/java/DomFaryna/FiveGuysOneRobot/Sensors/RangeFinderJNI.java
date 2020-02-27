@@ -14,4 +14,7 @@ public class RangeFinderJNI {
     public native void init(int i2cBus);
     // gets the current distance, in mm
     public native int getDistance();
+    public double getDistanceIn(){
+        return getDistance() / 25.4;
+    }
 }
