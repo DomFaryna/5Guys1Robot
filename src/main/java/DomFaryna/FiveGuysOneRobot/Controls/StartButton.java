@@ -5,8 +5,8 @@ import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
 // Button is used to wait until a button pressed before going on
 public class StartButton {
-    //private final Pin dPin = RaspiBcmPin.GPIO_19;
-    private final Pin dPin = RaspiPin.GPIO_24;
+    private final Pin dPin = RaspiBcmPin.GPIO_19;
+    //private final Pin dPin = RaspiPin.GPIO_24;
     private final GpioPinDigitalInput button;
 
     public StartButton() {

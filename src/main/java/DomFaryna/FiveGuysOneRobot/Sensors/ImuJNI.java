@@ -17,7 +17,7 @@ public class ImuJNI {
 
     public ImuJNI(){
         calibrate();
-        XYZ prev = new XYZ();
+        prev = new XYZ();
     }
 
     public native void calibrate();
@@ -34,13 +34,11 @@ public class ImuJNI {
         double[] raw = getRawGyro();
         XYZ sol = new XYZ(raw[0], raw[1], raw[2]);
         sol.round();
-        if(prev != null){
-            double diff = sol.x - prev.x;
-            if(diff > 90){
-                cycles--;
-            } else if(diff < -90){
-                cycles++;
-            }
+        double diff = sol.x - prev.x;
+        if(diff > 90){
+            cycles--;
+        } else if(diff < -90){
+            cycles++;
         }
         prev = new XYZ(sol.x, sol.y, sol.z);
         sol.x += (cycles * 360);

@@ -6,10 +6,14 @@ import DomFaryna.FiveGuysOneRobot.Sensors.ImuJNI;
 import DomFaryna.FiveGuysOneRobot.Sensors.RangeFinderJNI;
 import DomFaryna.FiveGuysOneRobot.Sensors.SideFinderJNI;
 import DomFaryna.FiveGuysOneRobot.Sensors.XYZ;
-import com.pi4j.io.gpio.*;
+import com.pi4j.io.gpio.GpioFactory;
+import com.pi4j.io.gpio.RaspiGpioProvider;
+import com.pi4j.io.gpio.RaspiPinNumberingScheme;
 import com.pi4j.io.i2c.I2CFactory;
 import com.pi4j.wiringpi.Gpio;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class main {
@@ -21,32 +25,45 @@ public class main {
     private static Motors right;
 
     private static void constructionCheck() throws InterruptedException {
+        System.out.println("waiting for button");
         start.waitForPress();
+        System.out.println("Button has been pressed");
         double distance = front.getDistanceIn();
-        while(distance < 10.0){
+        while (distance > 15.0) {
             System.out.println(String.format("Distance: %.2f", distance));
-            right.setSpeed(0.5);
-            left.setSpeed(0.5);
+            right.setSpeed(0.2);
+            left.setSpeed(0.2);
             distance = front.getDistanceIn();
+            Thread.sleep(20);
         }
         right.stop();
         left.stop();
-        Thread.sleep(200);
+        Thread.sleep(1000);
         XYZ rotation = bno.getGyro();
-        while(bno.getGyro().x < 85){
-            right.setSpeed(-0.5);
-            left.setSpeed(0.5);
+        while (rotation.x < 75) {
+            System.out.println(String.format("rotation: %.2f", rotation.x));
+            right.setSpeed(-0.3);
+            left.setSpeed(0.3);
+            rotation = bno.getGyro();
+            Thread.sleep(20);
         }
+        System.out.println("GOT TO DESTINATION");
         right.stop();
         left.stop();
-        Thread.sleep(200);
-        while(bno.getGyro().x > -175){
-            right.setSpeed(0.5);
-            left.setSpeed(-0.5);
+        Thread.sleep(1000);
+        rotation = bno.getGyro();
+        while (rotation.x > -165) {
+            System.out.println(String.format("rotation: %.2f", rotation.x));
+            right.setSpeed(0.3);
+            left.setSpeed(-0.3);
+            rotation = bno.getGyro();
+            Thread.sleep(20);
         }
+        System.out.println(String.format("Final rotation: %.2f", rotation.x));
         right.stop();
         left.stop();
-        Thread.sleep(200);
+        System.out.println("IM DONEEEE");
+        Thread.sleep(20);
     }
 
     public static void main(String[] args) throws IOException, I2CFactory.UnsupportedBusNumberException, InterruptedException {
@@ -54,37 +71,16 @@ public class main {
         RaspiGpioProvider provider = new RaspiGpioProvider(RaspiPinNumberingScheme.BROADCOM_PIN_NUMBERING);
         GpioFactory.setDefaultProvider(provider);
         front = new RangeFinderJNI(1);
-        //side = new SideFinderJNI(3);
+        side = new SideFinderJNI(3);
         bno = new ImuJNI();
         start = new StartButton();
         left = new Motors(false);
         right = new Motors(true);
-        //GpioPinDigitalOutput thisMF = gpio.provisionDigitalOutputPin(RaspiBcmPin.GPIO_21);
-        //GpioPinDigitalOutput thisMF = gpio.provisionDigitalOutputPin(provider, RaspiBcmPin.GPIO_21);
-        //GpioPinDigitalMultipurpose thisMF = gpio.provisionDigitalMultipurposePin(RaspiBcmPin.GPIO_21, PinMode.DIGITAL_OUTPUT);
-
-        //constructionCheck();
-        while(true){
+        constructionCheck();
+        while(true) {
             System.out.println(String.format("X: %.2f", bno.getGyro().x));
             System.out.println(String.format("Front: %.2f", front.getDistanceIn()));
-            //System.out.println(String.format("Side: %.2f", side.getDistanceIn()));
-            Thread.sleep(1000);
-            //right.setSpeed(0.3);
-            //left.setSpeed(0.3);
-            //Thread.sleep(1000);
-            //right.stop();
-            //left.stop();
-            //Thread.sleep(1000);
-            //right.setSpeed(-0.3);
-            //left.setSpeed(-0.3);
-            //Thread.sleep(1000);
-            //right.stop();
-            //left.stop();
-            //Thread.sleep(10000);
-            //System.out.println(String.format("Front: %.2f", front.getDistanceIn()));
-            //System.out.println(String.format("Side: %.2f", side.getDistanceIn()));
-            //start.waitForPressAndPrint();
-            Thread.sleep(500);
+            System.out.println(String.format("Side: %.2f", side.getDistanceIn()));
         }
     }
 }
