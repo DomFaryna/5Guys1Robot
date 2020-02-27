@@ -9,15 +9,21 @@ public class Motors {
     // pins, so I think its fine to leave it here
 
     private final Pin M3 = RaspiBcmPin.GPIO_06;
+    int lol = 6;
+    //int lol = 22;
     private final Pin M4 = RaspiBcmPin.GPIO_13;
     private final Pin PWMB = RaspiBcmPin.GPIO_12;
 
     private final Pin M1 = RaspiBcmPin.GPIO_20;
     private final Pin M2 = RaspiBcmPin.GPIO_21;
+    int he = 21;
+    //int he = 29;
+    //private final Pin M2 = RaspiPin.GPIO_29;
     private final Pin PWMA = RaspiBcmPin.GPIO_26;
 
     private GpioPinDigitalOutput d1;
     private GpioPinDigitalOutput d2;
+    //int d2;
     private GpioPinPwmOutput pwm;
     private boolean forward = true;
     private int multiplyFactor;
@@ -27,16 +33,17 @@ public class Motors {
         if(isRight){
             this.d1 = gpio.provisionDigitalOutputPin(M1);
             this.d2 = gpio.provisionDigitalOutputPin(M2);
+            //d2 = he;
             this.pwm = gpio.provisionSoftPwmOutputPin(PWMA);
             multiplyFactor = 100;
         } else {
             this.d1 = gpio.provisionDigitalOutputPin(M4);
             this.d2 = gpio.provisionDigitalOutputPin(M3);
+            //d2 = lol;
+            //this.pwm = gpio.provisionSoftPwmOutputPin(PWMA);
             this.pwm = gpio.provisionPwmOutputPin(PWMB);
             multiplyFactor = 1024;
         }
-        d1.setPullResistance(PinPullResistance.OFF);
-        d2.setPullResistance(PinPullResistance.OFF);
         d1.high();
         d2.low();
 
@@ -54,6 +61,7 @@ public class Motors {
             forward = false;
             d1.low();
             d2.high();
+            //d2.high();
         } else if(!forward && speed > 0.0){
             forward = true;
             d1.high();
