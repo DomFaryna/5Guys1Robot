@@ -1,5 +1,8 @@
 package DomFaryna.FiveGuysOneRobot.Controls;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Class that does PID calculation for motion control
  *
@@ -19,10 +22,15 @@ public class PID {
     private double t; //current time
     private double last_t; //time of last iteration
 
-    public PID(double kp, double ki, double kd) {
+    private double min = 0.35;
+    private List<Double> avg = new LinkedList<>();
+    private double sum = 0;
+
+    public PID(double kp, double ki, double kd, double min) {
         p = kp;
         i = ki;
         d = kd;
+        this.min = min;
         zero();
     }
 
@@ -33,6 +41,8 @@ public class PID {
     public void zero(double target, double observed) {
         total_e = 0;
         prev_e = target - observed;
+        sum = 0;
+        avg.clear();
     }
 
     /**
@@ -60,12 +70,42 @@ public class PID {
 
 
         // clamp
-        if (output > 1.0) {
-            output = 1.0;
+        if (Math.abs(output) > 1.0) {
+            if (output > 1.0) {
+                output = 1.0;
+            }
+
+            if (output < -1.0) {
+                output = -1.0;
+            }
         }
 
-        if (output < -1.0) {
-            output = -1.0;
+        // Anti stall code. If every cycle, we stuck, give it a boost
+        if (Math.abs(output) < min) {
+            if (output >= 0 && output < min) {
+                output = min;
+            }
+            if (output < 0 && output > -min) {
+                output = -min;
+            }
+
+            int avgWindow = 5;
+            // Give the motors enough power to yeet out
+
+            avg.add(output);
+            sum += output;
+            if(avg.size() > avgWindow){
+                sum -= avg.get(0);
+                avg.remove(0);
+            }
+
+            if(min * avgWindow  == Math.abs(sum)){
+                System.out.println("Anti Stall engaged");
+                output += (output > 0)? 0.05 : -0.05;
+            }
+        } else {
+            sum = 0;
+            avg.clear();
         }
         return output;
     }
