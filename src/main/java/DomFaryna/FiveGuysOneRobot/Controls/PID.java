@@ -25,6 +25,7 @@ public class PID {
     private double min = 0.35;
     private List<Double> avg = new LinkedList<>();
     private double sum = 0;
+    private double antistall = 0;
 
     public PID(double kp, double ki, double kd, double min) {
         p = kp;
@@ -89,7 +90,7 @@ public class PID {
                 output = -min;
             }
 
-            int avgWindow = 5;
+            int avgWindow = 3;
             // Give the motors enough power to yeet out
 
             avg.add(output);
@@ -101,11 +102,13 @@ public class PID {
 
             if(min * avgWindow  == Math.abs(sum)){
                 System.out.println("Anti Stall engaged");
-                output += (output > 0)? 0.05 : -0.05;
+                antistall += (output > 0)? 0.02 : -0.02;
+                output += antistall;
             }
         } else {
             sum = 0;
             avg.clear();
+            antistall = 0.0;
         }
         return output;
     }

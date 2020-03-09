@@ -97,9 +97,57 @@ public class main {
         }));
 
         PID turnPID = new PID(0.0151, 0, 0.00135, 0.12);
+        PID straightPID = new PID(0.0151, 0, 0.00135, 0);
+        PID drivePID = new PID(0.040, 0, 0.0075, 0.1);
         int cycles = 0;
 
         int i = 0;
+        left.setSpeed(0.85 * 0.88);
+        right.setSpeed(0.85);
+        Thread.sleep(100);
+
+        while(true){
+            i++;
+            double distance = front.getDistanceIn();
+            double angle = bno.getGyro().x;
+            double target = 15.5;
+            double power = -drivePID.iterate(target, distance);
+            double corr = straightPID.iterate(0, angle);
+            double leftSpeed = power + corr;
+            double rightSpeed = power - corr;
+            if(leftSpeed  > 1){
+                leftSpeed = 1;
+            }
+            if(rightSpeed > 1){
+                rightSpeed = 1;
+            }
+            left.setSpeed(0.85 * leftSpeed * 0.85);
+            right.setSpeed(0.85 * rightSpeed);
+
+            if (Math.abs(distance - target) < 1.5) {
+                cycles++;
+            } else {
+                cycles = 0;
+            }
+
+            if (cycles > 5) {
+                System.out.println("All done!");
+                System.out.println(String.format("Took %d to get to 15.5 in", i));
+                right.stop();
+                left.stop();
+                break;
+            }
+
+
+            System.out.println(String.format("Distance %.2fin, side %.2fin, angle %.2f degrees", distance, side.getDistanceIn(), angle));
+            System.out.println(String.format("Power %.2f", power));
+            System.out.println();
+
+            Thread.sleep(20);
+        }
+
+        i = 0;
+        cycles = 0;
         while(true) {
             i++;
             double angle = bno.getGyro().x;
@@ -129,8 +177,8 @@ public class main {
             }
             Thread.sleep(20);
 
-            ////System.out.println(String.format("Front: %.2f", front.getDistanceIn()));
-            ////System.out.println(String.format("Side: %.2f", side.getDistanceIn()));
+            //System.out.println(String.format("Front: %.2f", front.getDistanceIn()));
+            //System.out.println(String.format("Side: %.2f", side.getDistanceIn()));
         }
     }
 }
