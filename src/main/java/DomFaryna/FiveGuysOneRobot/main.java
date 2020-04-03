@@ -24,6 +24,7 @@ public class main {
     private static GpioController gpio;
 
     // when given ANY keyboard command, stop everything
+    // Needed as just doing a ctrl-c may leave a PWM pin on HIGH, resulting one of the motors going full speed forward.
     public static void stopListener() {
         try {
             System.in.read();

@@ -17,14 +17,11 @@ public class Motors {
     // pins, so I think its fine to leave it here
 
     private final Pin M3 = RaspiBcmPin.GPIO_06;
-    int lol = 6;
-    //int lol = 22;
     private final Pin M4 = RaspiBcmPin.GPIO_13;
     private final Pin PWMB = RaspiBcmPin.GPIO_12;
 
     private final Pin M1 = RaspiBcmPin.GPIO_20;
     private final Pin M2 = RaspiBcmPin.GPIO_21;
-    int he = 21;
     private final Pin PWMA = RaspiBcmPin.GPIO_26;
 
     private GpioPinDigitalOutput d1;
